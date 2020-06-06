@@ -1,0 +1,25 @@
+آپدیت نام کوچک در صفحه تسویه حساب
+
+**
+
+
+
+
+
+
+
+add_action('woocommerce_checkout_order_processed', 'custom_process_order1', 10, 1);
+function custom_process_order1($order_id) {
+    $current_user = wp_get_current_user();
+    $current_user_id = get_current_user_id();
+
+    update_user_meta($current_user_id, "first_name", $current_user->billing_first_name);
+}
+
+
+
+
+
+
+
+
