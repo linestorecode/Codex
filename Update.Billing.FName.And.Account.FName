@@ -1,0 +1,29 @@
+هماهنگ سازی کردن اطلاعات(نام کوچک در اینجا) مشتری، در وردپرس و ووکامرس
+Update.Billing.FName.And.Account.FName
+****
+
+when you change the account in one place or the other both will change, so both places will be the same.
+
+****
+
+add_action( 'woocommerce_save_account_details', 'my_account_saving_billing_user', 20, 1 );
+
+function my_account_saving_billing_user( $user_id ) {
+
+    if( isset( $_POST['account_first_name'] ) && $_POST['account_first_name'] != '' ){
+        update_user_meta( $user_id, 'billing_first_name', sanitize_text_field( $_POST['account_first_name'] ) );
+    }
+}
+
+
+
+add_action( 'woocommerce_customer_save_address', 'save_billing_email_to_user', 12, 1 );
+function save_billing_email_to_user( $user_id ) {
+    if( isset( $_POST['billing_first_name'] ) && $_POST['billing_first_name'] != '' ){
+        $args = array(
+            'ID'         => $user_id,
+            'user_first_name' => sanitize_text_field( esc_attr( $_POST['billing_first_name'] ))
+        );
+        wp_update_user( $args );
+    }
+}
